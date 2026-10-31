@@ -18,6 +18,7 @@
 | E-008 | Governance | Access review results | TBD | TBD | Pending |
 | E-009 | Governance | Audit documentation | TBD | TBD | Pending |
 | E-010 | Administrative Access | User Administrator role assignment | E-010-User-Administrator-Role.png | 2026-10-31 | Published |
+| E-011 | Identity Lifecycle | User creation interface access verified | E-011-User-Creation-Permission.png | 2026-10-31 | Published |
 
 ## Evidence Standards
 
