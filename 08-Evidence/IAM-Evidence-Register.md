@@ -23,6 +23,7 @@
 | E-013 | RBAC | Five departmental security groups created | E-013-Department-Security-Groups.png | 2026-10-31 | Published |
 | E-014A | Identity Lifecycle | Sarah Mitchell employee identity properties verified | E-014A-Employee-Identity-Properties.png | 2026-10-31 | Published |
 | E-014B | Identity Lifecycle | Sarah Mitchell HR group membership verified | E-014B-Employee-Group-Membership.png | 2026-10-31 | Published |
+| E-015 | Identity Lifecycle | Employee manager relationship configured and verified | E-015-Employee-Manager-Relationship.png | 2026-10-31 | Published |
 
 ## Evidence Standards
 
