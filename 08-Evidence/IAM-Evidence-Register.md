@@ -20,7 +20,7 @@
 | E-010 | Administrative Access | User Administrator role assignment | E-010-User-Administrator-Role.png | 2026-10-31 | Published |
 | E-011 | Identity Lifecycle | User creation interface access verified | E-011-User-Creation-Permission.png | 2026-10-31 | Published |
 | E-012 | Authentication Security | Microsoft Authenticator registration verified | E-012-Authenticator-Registration.png | 2026-10-31 | Published |
-
+| E-013 | RBAC | Five departmental security groups created | E-013-Department-Security-Groups.png | 2026-10-31 | Published |
 
 ## Evidence Standards
 
