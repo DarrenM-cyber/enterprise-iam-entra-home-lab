@@ -25,6 +25,9 @@
 | E-014B | Identity Lifecycle | Sarah Mitchell HR group membership verified | E-014B-Employee-Group-Membership.png | 2026-10-31 | Published |
 | E-015 | Identity Lifecycle | Employee manager relationship configured and verified | E-015-Employee-Manager-Relationship.png | 2026-10-31 | Published |
 
+
+| E-018 | Microsoft Graph Automation | Verified dedicated HFS Lab Administrator identity through Microsoft Graph /me endpoint | E-018-Microsoft-Graph-Connection-Verified.png | 2026-11-02 | Published |
+
 ## Evidence Standards
 
 Every evidence item should:
