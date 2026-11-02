@@ -99,6 +99,22 @@ I learned the importance of separating routine IAM administration from higher-pr
 
 Using a dedicated administrator account helps reduce reliance on Global Administrator privileges for everyday tasks.
 
+### CSV Validation and Identity Provisioning
+
+While preparing employee data for automated provisioning, I learned the importance of validating information before creating identities in Microsoft Entra ID.
+
+Using PowerShell, I successfully imported 18 fictional employee records and verified that the CSV contained no duplicate Employee IDs or missing required fields. I also reviewed departmental security group assignments for accuracy.
+
+I learned that automation should not blindly process incomplete or incorrect employee information.
+
+If HR provided a spreadsheet containing duplicate Employee IDs or missing department information, I would exclude the affected records from provisioning and contact HR to obtain the correct information.
+
+Once the errors were resolved, I would update the CSV, validate the corrected records, and provision the remaining employees through the established automation process.
+
+I also learned the importance of documenting provisioning exceptions and communicating potential onboarding delays to the appropriate stakeholders.
+
+**Key takeaway:** Reliable IAM automation requires accurate source data, validation controls, and a documented process for handling exceptions before accounts are created.
+
 ## 7. Testing and Validation
 
 | Test | Result |
@@ -108,6 +124,11 @@ Using a dedicated administrator account helps reduce reliance on Global Administ
 | Read permissions verified | PASS |
 | Sign-in error identified in Entra logs | PASS |
 | Successful dedicated administrator connection | PASS |
+| Imported 18 employee records from CSV |	PASS |
+| Verified employee IDs HFS-003 through HFS-020 |	PASS |
+| Reviewed departmental security group mappings |	PASS — Visual inspection |
+| Checked for duplicate Employee IDs |	PASS |
+| Checked for missing required employee fields | PASS |
 | Automated employee provisioning | PENDING |
 | Departmental group assignment automation | PENDING |
 | Provisioning validation and error handling | PENDING |
