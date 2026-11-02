@@ -26,6 +26,7 @@
 | E-015 | Identity Lifecycle | Employee manager relationship configured and verified | E-015-Employee-Manager-Relationship.png | 2026-10-31 | Published |
 | E-017 | Microsoft Graph Automation | Verified delegated Microsoft Graph permissions and administrator consent | E-017-Microsoft-Graph-Admin-Consent.png | 2026-11-02 | Published |
 | E-018 | Microsoft Graph Automation | Verified dedicated HFS Lab Administrator identity through Microsoft Graph /me endpoint | E-018-Microsoft-Graph-Connection-Verified.png | 2026-11-02 | Published |
+| E-019 | Microsoft Graph Automation | Investigated Microsoft Graph sign-in failure and identified Security Defaults as the blocking control | E-019-Security-Defaults-Authentication-Troubleshooting.png | 2026-11-02 | Published |
 
 ## Evidence Standards
 
