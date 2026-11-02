@@ -115,6 +115,20 @@ I also learned the importance of documenting provisioning exceptions and communi
 
 **Key takeaway:** Reliable IAM automation requires accurate source data, validation controls, and a documented process for handling exceptions before accounts are created.
 
+### Automated Access Validation
+
+While preparing the employee provisioning workflow, I learned how to use PowerShell to validate department-to-security-group assignments against predefined organizational rules.
+
+I created a mapping between five Horizon Financial Services departments and their corresponding Microsoft Entra security groups.
+
+Using PowerShell, I checked all 18 employee records and confirmed that none contained an incorrect departmental group assignment.
+
+I also used Microsoft Graph PowerShell to verify that all five security groups existed in Microsoft Entra ID.
+
+During testing, I encountered a PowerShell `if/else` syntax error. I resolved the issue and learned why it is important to verify that validation logic actually executes before trusting a successful result.
+
+**Key takeaway:** IAM automation should verify both the accuracy of employee information and the existence of required resources before provisioning accounts or assigning access.
+
 ## 7. Testing and Validation
 
 | Test | Result |
@@ -129,6 +143,8 @@ I also learned the importance of documenting provisioning exceptions and communi
 | Reviewed departmental security group mappings |	PASS — Visual inspection |
 | Checked for duplicate Employee IDs |	PASS |
 | Checked for missing required employee fields | PASS |
+| Automated department-to-group mapping validation | PASS — 18 checked, 0 invalid |
+| Verified departmental security groups in Entra ID | PASS — 5 of 5 groups found |
 | Automated employee provisioning | PENDING |
 | Departmental group assignment automation | PENDING |
 | Provisioning validation and error handling | PENDING |
