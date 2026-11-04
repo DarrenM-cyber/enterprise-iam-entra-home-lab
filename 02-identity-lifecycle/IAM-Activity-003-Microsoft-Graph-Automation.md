@@ -178,6 +178,22 @@ I gained a better understanding of the risks associated with role-assignable gro
 
 **Key takeaway:** Secure IAM automation requires validating both identities and destination groups, reviewing proposed changes, and preventing unintended privileged access before executing provisioning operations.
 
+### Microsoft Graph Troubleshooting and Fail-Closed Security
+
+I investigated an issue where Microsoft Graph PowerShell returned a blank value for the `isAssignableToRole` property on five departmental security groups.
+
+I used `Get-MgGroup`, `Invoke-MgGraphRequest`, and JSON output to investigate the property and discovered that Microsoft Graph returned `null` rather than an explicit `False` value.
+
+During troubleshooting, I also corrected a PowerShell string-interpolation issue that caused an incorrectly constructed Microsoft Graph API URL.
+
+I reviewed my delegated Microsoft Graph permissions and compared the API results with the Microsoft Entra admin center, where all five departmental groups were manually confirmed as non-role-assignable.
+
+This exercise reinforced the importance of fail-closed security. When automation cannot verify a security-sensitive configuration, it should stop the affected operation rather than assume the configuration is safe.
+
+**Key takeaway:** Secure IAM automation requires accurate interpretation of API responses, effective troubleshooting, and independent verification when security-critical information is unavailable.
+
+**Current status:** All five groups manually verified as non-role-assignable. Automated role-assignability verification remains unresolved and must be addressed before automated group membership assignments are enabled.
+
 ## 7. Testing and Validation
 
 | Test | Result |
