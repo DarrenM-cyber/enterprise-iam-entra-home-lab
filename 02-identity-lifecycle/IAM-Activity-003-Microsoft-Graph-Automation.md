@@ -129,6 +129,20 @@ During testing, I encountered a PowerShell `if/else` syntax error. I resolved th
 
 **Key takeaway:** IAM automation should verify both the accuracy of employee information and the existence of required resources before provisioning accounts or assigning access.
 
+### PowerShell Pre-Provisioning Validation
+
+I developed and successfully executed the first three validation checks in my reusable PowerShell employee provisioning script.
+
+The script imports 18 employee records from a CSV file, checks for duplicate Employee IDs, and verifies that all required employee information is present.
+
+I learned how to use PowerShell commands such as `Import-Csv`, `Group-Object`, `Where-Object`, and `throw` to validate employee data and stop automation when errors are detected.
+
+Most importantly, I learned that inaccurate employee information can create identity conflicts, incorrect authorization, security risks, and unreliable audit records.
+
+**Key takeaway:** IAM automation must validate identity data before provisioning accounts or assigning access to help enforce least privilege and maintain accurate identity records.
+
+**Validation results:** 18 employees imported, zero duplicate Employee IDs, and all required fields validated successfully.
+
 ## 7. Testing and Validation
 
 | Test | Result |
