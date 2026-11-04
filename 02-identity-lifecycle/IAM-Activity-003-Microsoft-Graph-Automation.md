@@ -143,6 +143,20 @@ Most importantly, I learned that inaccurate employee information can create iden
 
 **Validation results:** 18 employees imported, zero duplicate Employee IDs, and all required fields validated successfully.
 
+### Identity Uniqueness and Directory Validation
+
+I expanded my PowerShell provisioning script to perform six pre-provisioning validation checks against employee CSV data and Microsoft Entra ID.
+
+Using Microsoft Graph PowerShell, I retrieved existing directory users and compared their Employee IDs and User Principal Names (UPNs) against 18 incoming employee records.
+
+I learned that validating unique Employee IDs within a CSV is not sufficient. Automation must also check for existing directory identities and username conflicts to reduce the risk of duplicate accounts and incorrect access assignments.
+
+I implemented validation logic that stops the provisioning process when identity conflicts are detected rather than automatically modifying usernames or overwriting existing accounts.
+
+**Validation results:** All six checks passed, with 18 employee records validated and no existing Employee ID or username conflicts detected.
+
+**Key takeaway:** Reliable IAM onboarding requires both accurate source data and verification against existing directory identities before provisioning begins.
+
 ## 7. Testing and Validation
 
 | Test | Result |
