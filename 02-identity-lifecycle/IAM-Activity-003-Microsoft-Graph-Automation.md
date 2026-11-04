@@ -157,6 +157,27 @@ I implemented validation logic that stops the provisioning process when identity
 
 **Key takeaway:** Reliable IAM onboarding requires both accurate source data and verification against existing directory identities before provisioning begins.
 
+### Provisioning Dry Runs and Security Group Validation
+
+I developed a dry-run provisioning preview using PowerShell to review 18 proposed employee accounts, their departments, and their security group assignments before making changes to Microsoft Entra ID.
+
+I expanded the automation to validate five departmental security groups against the live Entra directory, confirming their existence, unique names, and security-enabled configuration.
+
+I also verified that all five groups use Assigned membership and are not configured to receive Microsoft Entra administrative roles.
+
+During testing, I learned the difference between Assigned and Dynamic group membership and why direct membership automation must account for these configurations.
+
+I gained a better understanding of the risks associated with role-assignable groups, particularly how an incorrect group assignment could grant excessive administrative privileges and violate least-privilege principles.
+
+**Validation results:**
+- 18 employee accounts successfully previewed.
+- Five departmental security groups verified.
+- Dynamic membership safeguard implemented.
+- All five groups manually confirmed as non-role-assignable.
+- Zero accounts created during testing.
+
+**Key takeaway:** Secure IAM automation requires validating both identities and destination groups, reviewing proposed changes, and preventing unintended privileged access before executing provisioning operations.
+
 ## 7. Testing and Validation
 
 | Test | Result |
