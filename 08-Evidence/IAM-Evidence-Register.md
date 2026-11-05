@@ -49,6 +49,8 @@
 | IAM-003-E08 | Reconnect with both scopes and validate existing-user lookup | Verified | 2026-11-05 | Published |
 | IAM-003-E09 | Provision and verify HFS-003 Michael Brooks | Verified | 2026-11-05 | Published |
 | IAM-003-E10 | Automated HR security-group assignment and independent verification of Michael Brooks's direct membership in SG-HFS-HR | Verified | 2026-11-05 | Published |
+| IAM-003-E11 | Microsoft Graph PowerShell idempotent employee provisioning dry run; validated 18 records, classified 17 CREATE and 1 EXISTS, with no accounts created | Verified | 2026-11-05 | Published |
+
 
 ### Evidence Handling Requirements
 
