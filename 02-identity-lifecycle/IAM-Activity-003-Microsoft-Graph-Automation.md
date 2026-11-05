@@ -413,5 +413,176 @@ Supporting screenshots will be stored in the `08-Evidence` directory and tracked
 
 **Milestone achieved:** Successfully created and independently verified the first CSV-driven employee identity in the Horizon Financial Services Microsoft Entra IAM lab.
 
-
 **Portfolio outcome:** Demonstrated the configuration and troubleshooting of Microsoft Entra application authentication, delegated Microsoft Graph permissions, administrator consent, and least-privilege access for an enterprise IAM automation workflow.
+## 12. Automated Security Group Assignment — HFS-003 Michael Brooks
+
+**Organization:** Horizon Financial Services (HFS)  
+**Activity:** IAM-003 — Microsoft Graph Automation  
+**Employee:** HFS-003 — Michael Brooks  
+**Target Security Group:** `SG-HFS-HR`  
+**Status:** Successfully assigned and independently verified.
+
+### 12.1 Objective
+
+Extend the employee onboarding process beyond account creation by assigning the employee to the appropriate departmental security group using Microsoft Graph PowerShell.
+
+Demonstrate identity lifecycle management, role-based access control (RBAC) principles, least-privilege API permissions, duplicate membership prevention, and independent verification of access assignments.
+
+### 12.2 Microsoft Graph Permission Configuration
+
+Configured the dedicated `HFS-IAM-Automation` application with the delegated Microsoft Graph permission `GroupMember.ReadWrite.All`.
+
+Administrator consent was granted for the Microsoft Entra tenant.
+
+Verified the authenticated Microsoft Graph session using `Get-MgContext`.
+
+| Configuration | Verified Value |
+|---|---|
+| Application | HFS-IAM-Automation |
+| Authentication Type | Delegated |
+| Administrator Account | HFS Lab Administrator |
+| Group Management Permission | `GroupMember.ReadWrite.All` |
+| Administrator Consent | Granted |
+
+**Security consideration:** `GroupMember.ReadWrite.All` permits group membership operations beyond the HR group, subject to the signed-in user's privileges. Production implementations should enforce additional authorization boundaries and approved-group restrictions.
+
+### 12.3 Security Group Validation
+
+Before performing the membership assignment, verified the target security group in Microsoft Entra ID.
+
+| Property | Verified Value |
+|---|---|
+| Group Name | SG-HFS-HR |
+| Group Type | Security |
+| Membership Type | Assigned |
+| Source | Cloud |
+| Microsoft Entra Role Assignable | No — verified in Entra admin center |
+| Existing Direct Members | 2 before assignment |
+
+The group was also retrieved through Microsoft Graph to validate its identity and security properties.
+
+**Technical limitation:** Microsoft Graph returned a null value for `IsAssignableToRole`. The group was independently verified as non-role-assignable through the Microsoft Entra admin center.
+
+For this controlled single-user lab operation, the assignment was restricted to the previously verified HR group's exact object ID.
+
+A future bulk provisioning script must fail closed when privileged-group eligibility cannot be reliably established.
+
+### 12.4 Duplicate Membership Prevention
+
+Before assigning the employee, queried the target group's direct membership using Microsoft Graph.
+
+```powershell
+Get-MgGroupMember -GroupId $hrGroups[0].Id -All -ErrorAction Stop |
+    Where-Object { $_.Id -eq $createdUser.Id } |
+    Select-Object Id
+```
+
+The query returned no matching records, confirming that Michael Brooks was not already a direct member of the HR security group.
+
+This check helps prevent unnecessary membership requests and supports repeatable onboarding operations.
+
+### 12.5 Pre-Assignment Safety Validation
+
+Validated the target group's identity and configuration before executing the membership change.
+
+The checks included:
+
+1. Confirming that the employee's Microsoft Entra object ID was available.
+2. Confirming that exactly one matching HR security group was returned.
+3. Verifying the expected group display name.
+4. Confirming that the group was security-enabled.
+5. Confirming that the group did not use dynamic membership.
+6. Comparing the group's object ID against the independently verified HR group identifier.
+7. Confirming the group's non-role-assignable status through the Microsoft Entra admin center.
+
+**Validation result:** `READY: HR group assignment target validated.`
+
+### 12.6 Automated Security Group Assignment
+
+Executed the Microsoft Graph PowerShell `New-MgGroupMemberByRef` cmdlet to add Michael Brooks to the HR security group.
+
+```powershell
+New-MgGroupMemberByRef `
+    -GroupId $hrGroups[0].Id `
+    -BodyParameter @{
+        "@odata.id" = "https://graph.microsoft.com/v1.0/directoryObjects/$($createdUser.Id)"
+    } `
+    -ErrorAction Stop
+```
+
+**Execution result:** Microsoft Graph completed the membership request without an error.
+
+### 12.7 Independent Membership Verification
+
+After the assignment, queried the group's direct membership again.
+
+```powershell
+$membership = @(
+    Get-MgGroupMember -GroupId $hrGroups[0].Id -All -ErrorAction Stop |
+        Where-Object { $_.Id -eq $createdUser.Id }
+)
+
+if ($membership.Count -eq 1) {
+    Write-Host "PASS: Michael Brooks is a direct member of SG-HFS-HR."
+} else {
+    Write-Host "FAIL: Expected HR group membership not confirmed."
+}
+```
+
+**Verification output:**
+
+```text
+PASS: Michael Brooks is a direct member of SG-HFS-HR.
+```
+
+This independently confirmed that the intended access assignment was saved in Microsoft Entra ID.
+
+### 12.8 Security Controls Demonstrated
+
+- **Least-privilege principles:** Used delegated Microsoft Graph permissions and a dedicated automation application.
+- **Group eligibility validation:** Verified security-group type, assigned membership, and non-role-assignable status.
+- **Duplicate prevention:** Checked existing direct membership before attempting the assignment.
+- **Target restriction:** Used the exact verified HR group object ID for the controlled operation.
+- **Independent verification:** Queried Microsoft Entra after the change to confirm membership.
+- **Separation of operations:** Validated account creation and group assignment independently.
+
+### 12.9 Evidence
+
+**IAM-003-E10 — Automated HR Security Group Assignment**
+
+Evidence includes:
+
+- Microsoft Graph delegated group-management permission and administrator consent.
+- HR security-group configuration verification.
+- Successful group-membership assignment.
+- Independent PowerShell verification confirming Michael Brooks's direct membership.
+
+Supporting screenshots are tracked in the IAM Evidence Register.
+
+### 12.10 Lessons Learned
+
+1. Employee onboarding requires both identity creation and appropriate access assignment.
+2. Group membership should be checked before attempting to add a user.
+3. API permissions and directory administrator roles are separate authorization controls.
+4. Role-assignable groups require additional safeguards because membership can convey administrative privileges.
+5. A successful API request should be followed by an independent read operation.
+6. A reusable provisioning workflow should handle partial failures and safely resume without creating duplicate accounts or memberships.
+
+### 12.11 Current Status and Next Steps
+
+**Completed:**
+
+- Created HFS-003 Michael Brooks using Microsoft Graph PowerShell.
+- Verified six employee account attributes.
+- Assigned Michael Brooks to `SG-HFS-HR`.
+- Independently verified his direct HR group membership.
+
+**Remaining:**
+
+- Consolidate employee creation and group assignment into a reusable PowerShell workflow.
+- Implement reliable fail-closed privileged-group checks for bulk automation.
+- Add idempotency and error handling for partially completed onboarding operations.
+- Test and provision the remaining 17 employees.
+- Publish the IAM-003-E10 evidence and update the IAM Evidence Register.
+
+**Milestone achieved:** Successfully completed and verified the first Microsoft Graph PowerShell employee onboarding workflow, including identity provisioning and departmental security-group assignment.
