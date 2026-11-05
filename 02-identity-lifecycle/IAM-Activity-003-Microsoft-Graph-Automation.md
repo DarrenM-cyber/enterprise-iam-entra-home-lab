@@ -302,11 +302,116 @@ Authentication through the dedicated HFS application has been successfully verif
 
 Remaining work:
 
-- Reconnect Microsoft Graph with `User.Create` and `User.Read.All`.
-- Verify that HFS-003 Michael Brooks does not already exist.
-- Test secure single-user provisioning.
-- Verify the created employee's identity attributes.
 - Validate security-group membership requirements separately.
 - Expand automation to the remaining employee records after successful testing.
+## 11. Automated Employee Provisioning — HFS-003 Michael Brooks
+
+**Organization:** Horizon Financial Services (HFS)  
+**Activity:** IAM-003 — Microsoft Graph Automation  
+**Provisioning Method:** PowerShell 7 and Microsoft Graph API  
+**Status:** Employee account created and verified; security-group assignment pending.
+
+### 11.1 Objective
+
+Demonstrate automated employee onboarding using a structured CSV data source, Microsoft Graph PowerShell, delegated API permissions, and identity validation controls.
+
+The objective was to securely provision a new employee account while preventing duplicate identities, enforcing initial password security, and verifying that employee attributes were correctly written to Microsoft Entra ID.
+
+### 11.2 Employee Provisioning Record
+
+| Attribute | Value |
+|---|---|
+| Employee ID | HFS-003 |
+| Display Name | Michael Brooks |
+| User Principal Name | `michael.brooks@mooredarrenc87yahoo.onmicrosoft.com` |
+| Department | Human Resources |
+| Job Title | Recruiter |
+| Intended Security Group | `SG-HFS-HR` |
+| Account Status | Enabled |
+| Group Membership | Pending verification and assignment |
+
+Employee attributes were imported from `HFS-Employees.csv`, reducing manual data entry and supporting a repeatable onboarding workflow.
+
+### 11.3 Pre-Provisioning Security Controls
+
+The following controls were completed before account creation:
+
+1. **Username uniqueness:** Queried Microsoft Graph for the intended User Principal Name. The API returned HTTP 404, indicating that the requested username was not found.
+2. **Employee ID uniqueness:** Queried the directory for `HFS-003`. No matching user was returned.
+3. **CSV validation:** Confirmed the employee's name, Employee ID, department, job title, and intended security group.
+4. **Required attribute validation:** Verified that all required account attributes were populated.
+5. **Password validation:** Generated a temporary password using a cryptographic random number generator and validated its length and character composition.
+6. **First-sign-in protection:** Configured `ForceChangePasswordNextSignIn` as `true`.
+7. **Least-privilege authorization:** Used the dedicated `HFS-IAM-Automation` application with delegated `User.Create` and `User.Read.All` permissions.
+
+### 11.4 Account Creation
+
+Provisioned the employee using the Microsoft Graph PowerShell `New-MgUser` cmdlet and account parameters derived from the employee CSV.
+
+```powershell
+$createdUser = New-MgUser @newUserParams -ErrorAction Stop
+```
+
+The operation completed successfully and returned the new Microsoft Entra user object's identifier.
+
+**Security note:** The password-bearing parameter object and temporary password were not displayed or recorded in the repository.
+
+### 11.5 Independent Post-Provisioning Verification
+
+Retrieved the newly created user from Microsoft Entra ID using Microsoft Graph.
+
+```powershell
+Get-MgUser -UserId $createdUser.Id `
+    -Property "displayName,userPrincipalName,employeeId,department,jobTitle,accountEnabled" |
+    Select-Object DisplayName, UserPrincipalName, EmployeeId, Department, JobTitle, AccountEnabled |
+    Format-List
+```
+
+| Verified Attribute | Result |
+|---|---|
+| Display Name | Michael Brooks — PASS |
+| User Principal Name | Expected username — PASS |
+| Employee ID | HFS-003 — PASS |
+| Department | Human Resources — PASS |
+| Job Title | Recruiter — PASS |
+| Account Enabled | True — PASS |
+
+**Verification result: 6 of 6 account attributes matched expected values.**
+
+### 11.6 Credential Handling
+
+The temporary password was generated locally and used only for the provisioning operation.
+
+After successful account verification, the temporary password and password-bearing parameter variables were removed from the active PowerShell session.
+
+No passwords, access tokens, or authentication secrets were committed to GitHub.
+
+### 11.7 Evidence References
+
+- **IAM-003-E08:** Duplicate username and Employee ID validation.
+- **IAM-003-E09:** Successful account creation and independent identity attribute verification.
+
+Supporting screenshots will be stored in the `08-Evidence` directory and tracked in the IAM Evidence Register.
+
+### 11.8 Lessons Learned
+
+- Identity provisioning should validate existing directory records before creating new accounts.
+- Employee IDs and usernames provide complementary duplicate-detection controls.
+- CSV-driven provisioning improves consistency and reduces manual entry errors.
+- Successful API responses should be followed by independent verification of stored directory attributes.
+- Temporary credentials require careful handling throughout the provisioning lifecycle.
+- Account creation and security-group assignment should be validated as separate operations.
+- A provisioning script should support safe reruns and avoid duplicating accounts after partial completion.
+
+### 11.9 Remaining Work
+
+- Verify the intended HR security group's eligibility for automated membership management.
+- Obtain and validate appropriate Microsoft Graph group-management permissions.
+- Assign Michael Brooks to `SG-HFS-HR` and independently verify membership.
+- Implement safe, repeatable provisioning for the remaining employee records.
+- Publish sanitized provisioning evidence and update the IAM Evidence Register.
+
+**Milestone achieved:** Successfully created and independently verified the first CSV-driven employee identity in the Horizon Financial Services Microsoft Entra IAM lab.
+
 
 **Portfolio outcome:** Demonstrated the configuration and troubleshooting of Microsoft Entra application authentication, delegated Microsoft Graph permissions, administrator consent, and least-privilege access for an enterprise IAM automation workflow.
