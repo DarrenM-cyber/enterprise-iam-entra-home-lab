@@ -228,3 +228,85 @@ This exercise reinforced the importance of fail-closed security. When automation
 Evidence screenshots will be stored in the `08-Evidence` directory and referenced through the IAM Evidence Register.
 
 **Evidence pending preparation and redaction.**
+
+## 10. Microsoft Graph Authentication & Troubleshooting
+
+**Organization:** Horizon Financial Services (HFS)  
+**Activity:** IAM-003 — Microsoft Graph Automation  
+**Status:** Authentication and API permission configuration completed; automated employee provisioning in progress.
+
+### Objective
+
+Configure a dedicated Microsoft Entra application to support PowerShell-based identity provisioning while applying least-privilege access controls, delegated authentication, and administrator consent.
+
+### Challenges Encountered
+
+During implementation, several authentication and authorization issues prevented Microsoft Graph PowerShell from establishing a usable connection.
+
+| Error / Issue | Root Cause | Resolution |
+|---|---|---|
+| Administrator consent required | Microsoft Graph Command Line Tools lacked the required user-creation permission | Registered a dedicated HFS automation application and obtained administrator consent |
+| AADSTS50011 | Authentication redirect URI did not match the application's registered redirect URIs | Configured the appropriate desktop and localhost redirect URIs |
+| AADSTS7000218 | The localhost redirect URI was configured as a Web application redirect, causing confidential-client credential requirements | Reconfigured localhost under Mobile and desktop applications |
+| Windows authentication broker incompatibility | WAM authentication used a redirect URI not configured for the application | Used `Set-MgGraphOption -DisableLoginByWAM $true` to switch to browser authentication |
+| 403 Authorization_RequestDenied | `User.Create` did not authorize the existing-user lookup required for duplicate detection | Added and obtained administrator consent for delegated `User.Read.All` |
+
+### Application Registration and Security Configuration
+
+Created a dedicated application registration named `HFS-IAM-Automation`.
+
+Configured the following Microsoft Graph delegated permissions:
+
+- `User.Create` — Supports creation of standard employee accounts.
+- `User.Read.All` — Supports existing-user lookups and duplicate-account validation.
+
+Both permissions received administrator consent.
+
+Configured interactive public-client authentication with the appropriate desktop redirect URI settings. No client secret was created.
+
+The operational HFS Lab Administrator retained its existing User Administrator role. No permanent elevation to Global Administrator was required.
+
+### Authentication Verification
+
+Successfully established a Microsoft Graph PowerShell session using the dedicated HFS application.
+
+Verification command:
+
+```powershell
+Get-MgContext | Select-Object Account, AppName, ClientId, TenantId, AuthType, Scopes
+```
+
+Verified results:
+
+- **Account:** HFS Lab Administrator
+- **Application:** HFS-IAM-Automation
+- **Authentication type:** Delegated
+- **Verified scope:** `User.Create`
+- **Tenant:** HFS Microsoft Entra tenant
+
+After successful authentication, a user lookup returned HTTP 403 because `User.Read.All` had not yet been granted. The missing permission was subsequently configured and approved.
+
+**Pending verification:** Reconnect with both `User.Create` and `User.Read.All`, then rerun the duplicate-account check.
+
+### Security Principles Demonstrated
+
+1. **Least privilege:** Selected `User.Create` rather than requesting broad user-write permissions.
+2. **Separation of duties:** Kept application consent administration separate from routine user provisioning.
+3. **Secure authentication:** Used interactive delegated authentication without storing administrator credentials or client secrets.
+4. **Troubleshooting methodology:** Used Microsoft Entra error codes and PowerShell exception details to identify configuration problems.
+5. **Provisioning safeguards:** Required duplicate-account verification before attempting account creation.
+
+### Current Status and Next Steps
+
+Authentication through the dedicated HFS application has been successfully verified.
+
+Remaining work:
+
+- Reconnect Microsoft Graph with `User.Create` and `User.Read.All`.
+- Verify that HFS-003 Michael Brooks does not already exist.
+- Test secure single-user provisioning.
+- Verify the created employee's identity attributes.
+- Validate security-group membership requirements separately.
+- Expand automation to the remaining employee records after successful testing.
+
+**Portfolio outcome:** Demonstrated the configuration and troubleshooting of Microsoft Entra application authentication, delegated Microsoft Graph permissions, administrator consent, and least-privilege access for an enterprise IAM automation workflow.
