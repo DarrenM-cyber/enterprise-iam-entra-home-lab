@@ -29,6 +29,45 @@
 | E-018 | Microsoft Graph Automation | Verified dedicated HFS Lab Administrator identity through Microsoft Graph /me endpoint | E-018-Microsoft-Graph-Connection-Verified.png | 2026-11-02 | Published |
 | E-019 | Microsoft Graph Automation | Investigated Microsoft Graph sign-in failure and identified Security Defaults as the blocking control | E-019-Security-Defaults-Authentication-Troubleshooting.png | 2026-11-02 | Published |
 
+## IAM Activity 003 — Microsoft Graph Authentication & Troubleshooting
+
+**Organization:** Horizon Financial Services (HFS)  
+**Activity:** IAM-003 — Microsoft Graph Automation  
+**Status:** Authentication completed; employee provisioning in progress.
+
+### Evidence Tracking
+
+| Evidence ID | Description | Verification Status | Screenshot Status |
+|---|---|---|---|
+| IAM-003-E01 | HFS-IAM-Automation application registration created in Microsoft Entra ID | Verified | Pending upload |
+| IAM-003-E02 | Delegated `User.Create` permission granted administrator consent | Verified | Pending upload |
+| IAM-003-E03 | Redirect URI mismatch (`AADSTS50011`) investigated and corrected | Verified | Pending upload |
+| IAM-003-E04 | Public-client authentication error (`AADSTS7000218`) investigated and corrected | Verified | Pending upload |
+| IAM-003-E05 | Microsoft Graph PowerShell authenticated using HFS-IAM-Automation | Verified | Pending upload |
+| IAM-003-E06 | `Get-MgContext` confirmed HFS Lab Administrator, delegated authentication, and `User.Create` scope | Verified | Pending upload |
+| IAM-003-E07 | `User.Read.All` configured and granted administrator consent following a 403 authorization error | Verified | Pending upload |
+| IAM-003-E08 | Reconnect with both scopes and validate existing-user lookup | Pending | Pending upload |
+| IAM-003-E09 | Provision and verify HFS-003 Michael Brooks | Pending | Pending upload |
+
+### Evidence Handling Requirements
+
+- Redact authentication tokens, authorization codes, passwords, and other credentials before uploading screenshots.
+- Avoid exposing browser callback URLs or sensitive authentication details.
+- Verify that screenshots do not contain confidential information.
+- Store approved evidence files in the `08-Evidence` directory.
+- Update screenshot statuses and file references after evidence is uploaded.
+
+### Key Security Controls Demonstrated
+
+- Least-privilege Microsoft Graph delegated permissions
+- Administrator consent management
+- Dedicated application registration
+- Interactive authentication without stored client secrets
+- Troubleshooting of authentication and authorization failures
+- Duplicate-account checks before automated provisioning
+
+**Note:** Verification status reflects completed lab actions. Screenshot status remains pending until sanitized evidence files are uploaded to GitHub.
+
 ## Evidence Standards
 
 Every evidence item should:
