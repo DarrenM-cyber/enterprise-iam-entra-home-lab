@@ -48,6 +48,7 @@
 | IAM-003-E07 | `User.Read.All` configured and granted administrator consent following a 403 authorization error | Verified | 2026-11-04 | Published |
 | IAM-003-E08 | Reconnect with both scopes and validate existing-user lookup | Verified | 2026-11-05 | Published |
 | IAM-003-E09 | Provision and verify HFS-003 Michael Brooks | Verified | 2026-11-05 | Published |
+| IAM-003-E10 | Automated HR security-group assignment and independent verification of Michael Brooks's direct membership in SG-HFS-HR | Verified | 2026-11-05 | Published |
 
 ### Evidence Handling Requirements
 
