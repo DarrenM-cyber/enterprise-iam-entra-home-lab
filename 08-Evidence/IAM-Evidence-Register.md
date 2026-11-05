@@ -44,7 +44,7 @@
 | IAM-003-E03 | Redirect URI mismatch (`AADSTS50011`) investigated and corrected | Verified | Pending upload |
 | IAM-003-E04 | Public-client authentication error (`AADSTS7000218`) investigated and corrected | Verified | Pending upload |
 | IAM-003-E05 | Microsoft Graph PowerShell authenticated using HFS-IAM-Automation | Verified | Pending upload |
-| IAM-003-E06 | `Get-MgContext` confirmed HFS Lab Administrator, delegated authentication, and `User.Create` scope | Verified | Pending upload |
+| IAM-003-E06 | `Get-MgContext` confirmed HFS Lab Administrator, delegated authentication, and `User.Create` scope | Verified | Published |
 | IAM-003-E07 | `User.Read.All` configured and granted administrator consent following a 403 authorization error | Verified | Pending upload |
 | IAM-003-E08 | Reconnect with both scopes and validate existing-user lookup | Pending | Pending upload |
 | IAM-003-E09 | Provision and verify HFS-003 Michael Brooks | Pending | Pending upload |
