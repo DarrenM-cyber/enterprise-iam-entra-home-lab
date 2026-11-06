@@ -586,3 +586,49 @@ Supporting screenshots are tracked in the IAM Evidence Register.
 - Publish the IAM-003-E10 evidence and update the IAM Evidence Register.
 
 **Milestone achieved:** Successfully completed and verified the first Microsoft Graph PowerShell employee onboarding workflow, including identity provisioning and departmental security-group assignment.
+
+## 13 ## Controlled Employee Provisioning — HFS-004
+
+### Objective
+Demonstrate a controlled employee onboarding workflow using Microsoft Graph PowerShell, including identity validation, account creation, password management, and security-group membership verification.
+
+### Test Employee
+- **Employee ID:** HFS-004
+- **Employee Name:** Emily Carter
+- **Department:** Human Resources
+- **Job Title:** Benefits Specialist
+- **Target Security Group:** SG-HFS-HR
+
+### Implementation and Results
+
+1. **Pre-Provisioning Validation — PASS**
+   - Validated employee attributes against the HR CSV.
+   - Verified Microsoft Graph authentication and permissions.
+   - Confirmed that the employee ID and username were available.
+   - Generated and validated a secure temporary password.
+
+2. **Controlled Account Creation — PASS**
+   - Used PowerShell `ShouldProcess` to require explicit authorization.
+   - Successfully tested `-WhatIf` to prevent unintended changes.
+   - Created the employee account using `New-MgUser`.
+   - Restored the live-provisioning safety switch to `$false`.
+
+3. **Post-Provisioning Verification — PASS**
+   - Retrieved the newly created account using Microsoft Graph.
+   - Confirmed employee ID, department, job title, username, and enabled status.
+
+4. **Password Management — COMPLETE**
+   - Reset the temporary password through Microsoft Entra Admin Center.
+   - Excluded passwords from scripts, screenshots, and GitHub evidence.
+
+5. **Security Group Assignment — PASS**
+   - Verified that SG-HFS-HR was a security-enabled, non-role-assignable group.
+   - Manually assigned Emily Carter to SG-HFS-HR.
+   - Independently verified membership using Microsoft Graph PowerShell.
+   - Kept automated group assignment disabled pending further validation.
+
+### Evidence
+- `08-Evidence/IAM-003-HFS004-HR-Group-Membership.png`
+
+### Outcome
+Successfully demonstrated a controlled Microsoft Entra ID employee onboarding workflow using Microsoft Graph PowerShell, combining automated identity provisioning, authorization safeguards, independent verification, and manually controlled security-group assignment.
