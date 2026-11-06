@@ -33,12 +33,13 @@
 
 **Organization:** Horizon Financial Services (HFS)  
 **Activity:** IAM-003 — Microsoft Graph Automation  
-**Status:** Authentication completed; employee provisioning in progress.
+**Status:** Authentication validated; automated employee provisioning successfully demonstrated with HFS-003 and HFS-004. HFS-004 group membership manually assigned and independently verified. Additional IAM automation development ongoing.
 
 ### Evidence Tracking
 
+
 | Evidence ID | Description | Verification Status | Date | Screenshot Status |
-|---|---|---|---|
+|---|---|---|---|---|
 | IAM-003-E01 | HFS-IAM-Automation application registration created in Microsoft Entra ID | Verified | 2026-11-04 | Published |
 | IAM-003-E02 | Delegated `User.Create` permission granted administrator consent | Verified | 2026-11-04 | Published |
 | IAM-003-E03 | Redirect URI mismatch (`AADSTS50011`) investigated and corrected | Verified | 2026-11-04 | Published |
@@ -50,6 +51,8 @@
 | IAM-003-E09 | Provision and verify HFS-003 Michael Brooks | Verified | 2026-11-05 | Published |
 | IAM-003-E10 | Automated HR security-group assignment and independent verification of Michael Brooks's direct membership in SG-HFS-HR | Verified | 2026-11-05 | Published |
 | IAM-003-E11 | Microsoft Graph PowerShell idempotent employee provisioning dry run; validated 18 records, classified 17 CREATE and 1 EXISTS, with no accounts created | Verified | 2026-11-05 | Published |
+| IAM-003-E12 | HFS-004 Emily Carter HR group membership verified using Microsoft Graph (`IAM-003-HFS004-HR-Group-Membership.png`) | Verified | 2026-11-05 | Published |
+
 
 
 ### Evidence Handling Requirements
